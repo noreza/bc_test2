@@ -1,14 +1,34 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Content:</strong>
-  <%= @article.content %>
-</p>
+<div id="title">
+    <div>
+        <p>
+          <%= @article.created_at %>
+          書いた人:
+          <%= @user.email %>
+        </p>
+        <h1>
+          <%= @article.title %>
+        </h1>
+    </div>
+</div>
 
-<p>
-  <strong>User:</strong>
-  <%= @article.user_id %>
-</p>
+<div id="article_wrap">
 
-<%= link_to 'Edit', edit_article_path(@article) %> |
-<%= link_to 'Back', articles_path %>
+    <div id="content">
+
+      <%= @article.content %>
+
+    </div>
+
+
+    <div id="sidebar">
+
+        <h2>★PV数ランキング</h2>
+        <ul>
+            <li><a href="">記事タイトル記事タイトル１記事タイトル記事タイトル<span>（10PV）</span></a></li>
+            <li><a href="">記事タイトル記事タイトル１記事タイトル記事タイトル<span>（8PV）</span></a></li>
+            <li><a href="">記事タイトル記事タイトル１記事タイトル記事タイトル<span>（2PV）</span></a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>
