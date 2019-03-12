@@ -21,7 +21,7 @@ class ArticlesController < ApplicationController
 
   # GET /articles/1/edit
   def edit
-    if @article.user_id != @current_user.id
+    if @article.user_id != current_user.id
       flash[:notice] = "権限がありません"
     end
   end
