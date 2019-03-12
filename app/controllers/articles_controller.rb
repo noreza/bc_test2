@@ -21,13 +21,16 @@ class ArticlesController < ApplicationController
 
   # GET /articles/1/edit
   def edit
+    if @article.user_id != @current_user.id
+      flash[:notice] = "権限がありません"
+    end
   end
 
   # POST /articles
   # POST /articles.json
   def create
     @article = Article.new(article_params)
-    @article.user_id = 1
+    @article.user_id = current_user.id
 
     respond_to do |format|
       if @article.save
@@ -57,6 +60,9 @@ class ArticlesController < ApplicationController
   # DELETE /articles/1
   # DELETE /articles/1.json
   def destroy
+    if @article.user_id != @current_user.id
+      flash[:notice] = "権限がありません"
+    end
     @article.destroy
     respond_to do |format|
       format.html { redirect_to articles_url, notice: 'Article was successfully destroyed.' }

@@ -16,7 +16,7 @@
         <p id="logo"><a href="">RailsCamp<span>Blog</span></a></p>
         <nav>
             <ul>
-                <li><a href="">トップ</a></li>
+                <li><%= link_to("トップ", root_path) %></li>
 
                 <% if user_signed_in? %>
                   <li><%= link_to("新規投稿", new_article_path) %></li>
@@ -33,9 +33,7 @@
     </header>
 
 
-
     <%= yield %>
-
 
     <footer>
         <div id="footer_inner">
