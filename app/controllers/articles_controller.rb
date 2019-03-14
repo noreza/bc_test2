@@ -1,6 +1,7 @@
 class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, only: [:edit, :destroy]
+  before_action :set_ranking_data
 
   # GET /articles
   # GET /articles.json
@@ -13,6 +14,13 @@ class ArticlesController < ApplicationController
   def show
     @article = Article.find(params[:id])
     @user = User.find_by(id: @article.user_id)
+    REDIS.zincrby "articles", 1, "#{@article.id}"
+    @pv = REDIS.get "articles/#{@article.id}"
+  end
+
+  def set_ranking_data
+    ids = REDIS.zrevrangebyscore("articles", "+inf", 0, limit:[0,5])
+    @ranking_articles = ids.map{ |id| Article.find(id) }
   end
 
   # GET /articles/new
