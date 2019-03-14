@@ -12,8 +12,11 @@
   </head>
 
   <body>
+    <% if flash[:alert] %>
+      <p class="alert"><%= flash[:alert] %></p>
+    <% end %>
     <header>
-        <p id="logo"><a href="">RailsCamp<span>Blog</span></a></p>
+        <p id="logo"><a href="/">RailsCamp<span>Blog</span></a></p>
         <nav>
             <ul>
                 <li><%= link_to("トップ", root_path) %></li>
@@ -32,8 +35,32 @@
         <div class="clear"></div>
     </header>
 
+    <% if current_page?(root_path) %>
+    <div id="main">
+        <%= image_tag("main-img.jpg") %>
+    </div>
+    <% end %>
+
+    <% if controller.controller_name == 'articles' && controller.action_name == 'show' %>
+    <div id="title">
+        <div>
+            <p>
+              <%= @article.created_at %>
+              書いた人:
+              <%= @user.email %>
+            </p>
+            <h1>
+              <%= @article.title %>
+            </h1>
+        </div>
+    </div>
+    <% end %>
+
+    <div id="article_wrap">
 
     <%= yield %>
+
+    </div>
 
     <footer>
         <div id="footer_inner">

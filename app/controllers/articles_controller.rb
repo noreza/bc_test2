@@ -1,5 +1,6 @@
 class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:edit, :destroy]
 
   # GET /articles
   # GET /articles.json
@@ -22,7 +23,7 @@ class ArticlesController < ApplicationController
   # GET /articles/1/edit
   def edit
     if @article.user_id != current_user.id
-      flash[:notice] = "権限がありません"
+      redirect_to root_path, alert: 'Not yours'
     end
   end
 
@@ -34,7 +35,7 @@ class ArticlesController < ApplicationController
 
     respond_to do |format|
       if @article.save
-        format.html { redirect_to root_path }
+        format.html { redirect_to "/articles/#{@article.id}" }
         format.json { render :show, status: :created, location: @article }
       else
         format.html { render :new }
@@ -48,7 +49,7 @@ class ArticlesController < ApplicationController
   def update
     respond_to do |format|
       if @article.update(article_params)
-        format.html { redirect_to root_path }
+        format.html { redirect_to "/articles/#{@article.id}" }
         format.json { render :show, status: :ok, location: @article }
       else
         format.html { render :edit }
@@ -60,14 +61,15 @@ class ArticlesController < ApplicationController
   # DELETE /articles/1
   # DELETE /articles/1.json
   def destroy
-    if @article.user_id != @current_user.id
-      flash[:notice] = "権限がありません"
-    end
+    if @article.user_id != current_user.id
+      redirect_to root_path, alert: 'Not yours' and return
+    else
     @article.destroy
-    respond_to do |format|
-      format.html { redirect_to articles_url, notice: 'Article was successfully destroyed.' }
-      format.json { head :no_content }
+    redirect_to root_path
     end
+    #respond_to do |format|
+    #  format.html { redirect_to articles_url, notice: 'Article was successfully destroyed.' }
+    #  format.json { head :no_content }
   end
 
   private

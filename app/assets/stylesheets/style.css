@@ -178,3 +178,20 @@ div#content h2{
     margin: 20px 0;
 }
 
+.notice {
+    text-align: center;
+    padding: 20px;
+    background: lightblue;
+    font-size: 18px;
+    font-weight: bold;
+    color: #FFF
+}
+
+.alert {
+    text-align: center;
+    padding: 20px;
+    background: lightcoral;
+    font-size: 18px;
+    font-weight: bold;
+    color: #FFF
+}
